@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>News App</title>
+
+	<style type="text/css">
+		*, body {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		.header {
+			width: 100%;
+			height: 100px;
+			background-color: rgb(22, 22, 22);
+			color: rgb(250, 250, 250);
+		}
+
+		.header h1 {
+			text-align: center;
+			padding-top: 30px;
+			font-family: cursive;
+		}
+
+		.main {
+			width: 60%;
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: 10px;
+		}
+
+		.news {
+			margin: 10px;
+			padding: 10px;
+		}
+
+		img {
+			width: 100%;
+			height: 300px;
+		}
+
+		p {
+			font-size: 15px;
+			font-family: cursive;
+			font-weight: 200;
+			padding-top: 4px;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<div class="header">
+			<h1 class="heading">Flask News App</h1>
+		</div>
+	</section>
+	<section class="main">
+		
+			{% for article in articles %}
+			<div class="news">
+				{% if article['urlToImage'] %}
+					<img src="{{article['urlToImage']}}">
+					<h3> {{article['title']}} <h3>
+					<h4> {{article['publishedAt'][:10]}} </h4>
+					<p> {{article['description']}} <p>
+				{% endif %}
+			</div>
+			{% endfor %}
+		
+	</section>
+</body>
+</html>
+
+<!--  'title',  'description', 'urlToImage', 'content',  -->
