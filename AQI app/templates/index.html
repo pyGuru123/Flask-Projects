@@ -1,1 +1,81 @@
-
+<!Doctype html>
+<html>
+	<head>
+		<title> AQI App </title>
+		<style>
+			*, html {
+				margin:0;
+				padding:0;
+			}
+			
+			form {
+				text-align : center;
+				color : #00f;
+				font-size : 22px;
+				font-family : cursive;
+			}
+			
+			div {
+				width : 60%;
+				margin-left : auto;
+				margin-right : auto;
+				border : 0.5px solid grey;
+				margin-top : 10px;
+				font-size: 18px;
+				font-family : "Proxima Nova", Futura, cursive;
+				padding: 3px;
+				padding-left : 10px;
+			}
+		</style>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	</head>
+	
+	<body>
+		<div class="form">
+			<form action="http://127.0.0.1:5000/aqi" method="POST">
+				<p> Enter city <input type="input" name="city"> </p>
+				<input type="submit" value="submit">
+			</form>
+		</div>
+		
+		{% if result %}
+			<div class="info">
+				<h2> AQI Info for {{result['city']}} </h2>
+				<span> AQI : {{ result['aqi'] }} </span>
+				<br/>
+				{% for key, value in result['stats'].items() %}
+					<span> {{key}} : {{value['v']}} </span> <br/>
+				{% endfor %}
+			</div>
+			
+			<div class="chart"> </div>
+		{% endif %}
+		
+		<script>
+			google.charts.load("current", {"packages" : ["corechart"]});
+			//google.charts.setOnLoadCallback(drawChart);
+			
+			const d = document.querySelector(".chart");
+			d.style.borderColor = red;
+			d.onclick = function() {
+				drawChart();
+			}
+			
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable([
+					{% for key, value in result['stats'].items() %}
+						['{{key}}', {{value['v']}}],
+					{% endfor %}
+				]);
+				
+				var options = {
+				title: 'My Daily Activities',
+				is3D: true,
+				};
+				
+				var chart = new google.visualization.PieChart(document.querySelector('.chart'));
+				chart.draw(data, options);
+			}
+		</script>
+	</body>
+</html>
