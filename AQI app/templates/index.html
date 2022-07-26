@@ -13,13 +13,13 @@
 				color : #00f;
 				font-size : 22px;
 				font-family : cursive;
+				border : 0.5px solid grey;
 			}
 			
 			div {
 				width : 60%;
 				margin-left : auto;
 				margin-right : auto;
-				border : 0.5px solid grey;
 				margin-top : 10px;
 				font-size: 18px;
 				font-family : "Proxima Nova", Futura, cursive;
@@ -27,7 +27,7 @@
 				padding-left : 10px;
 			}
 		</style>
-		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 	</head>
 	
 	<body>
@@ -48,34 +48,33 @@
 				{% endfor %}
 			</div>
 			
-			<div class="chart"> </div>
+			<div class="chartdiv">
+				<canvas id="chart" width="300" height="200"></canvas>
+			</div>
 		{% endif %}
 		
 		<script>
-			google.charts.load("current", {"packages" : ["corechart"]});
-			//google.charts.setOnLoadCallback(drawChart);
-			
-			const d = document.querySelector(".chart");
-			d.style.borderColor = red;
-			d.onclick = function() {
-				drawChart();
-			}
-			
-			function drawChart() {
-				var data = google.visualization.arrayToDataTable([
-					{% for key, value in result['stats'].items() %}
-						['{{key}}', {{value['v']}}],
-					{% endfor %}
-				]);
-				
-				var options = {
-				title: 'My Daily Activities',
-				is3D: true,
-				};
-				
-				var chart = new google.visualization.PieChart(document.querySelector('.chart'));
-				chart.draw(data, options);
-			}
+			{% if result %}
+				var data = [];
+				var labels = [];
+				{% for key, value in result['stats'].items() %}
+					labels.push['{{key}}'];
+					data.push[{{value['v']}}];
+				{% endfor %}
+
+				const ctx = document.getElementById('chart').getContext('2d');
+				new Chart(ctx, {
+					type: 'pie',
+					data: {
+					labels : labels,
+					datasets : [{
+						label: 'Pollution level',
+						data: data,
+						hoverOffset: 4
+						}]
+					}
+				});
+			{% endif %}
 		</script>
 	</body>
 </html>

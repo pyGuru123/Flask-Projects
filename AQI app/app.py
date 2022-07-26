@@ -22,6 +22,8 @@ def getAQI():
 		result['city'] = city
 		result['aqi'] = data['aqi']
 		result['stats'] = data['iaqi']
+		if 'p' in result['stats']:
+			del result['stats']['p']
 		return render_template("index.html", result=result)
 
 
