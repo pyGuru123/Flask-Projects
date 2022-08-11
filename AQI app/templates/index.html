@@ -1,4 +1,4 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title> AQI App </title>
@@ -63,8 +63,6 @@
 		{% endif %}
 		
 		<script>
-			const chartdiv = document.querySelector(".chartdiv");
-
 			{% if result %}
 				var data = [];
 				var labels = [];
@@ -74,8 +72,6 @@
 					data.push({{value['v']}});
 					colors.push(`rgb(${getPixel()}, ${getPixel()}, ${getPixel()})`);
 				{% endfor %}
-				console.log(data);
-				console.log(labels);
 
 				new Chart("chart", {
 					type: 'pie',
