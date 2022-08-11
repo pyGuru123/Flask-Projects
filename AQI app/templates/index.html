@@ -30,6 +30,10 @@
 			h2 {
 				text-align: center;
 			}
+			
+			p {
+				color: black;
+			}
 		</style>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 	</head>
@@ -53,11 +57,14 @@
 			</div>
 			
 			<div class="chartdiv">
-				<canvas id="chart" width="300" height="200"></canvas>
+				<canvas id="chart"></canvas>
+				<canvas id="myChart"> </canvas>
 			</div>
 		{% endif %}
 		
 		<script>
+			const chartdiv = document.querySelector(".chartdiv");
+
 			{% if result %}
 				var data = [];
 				var labels = [];
@@ -70,8 +77,7 @@
 				console.log(data);
 				console.log(labels);
 
-				const ctx = document.getElementById('chart').getContext('2d');
-				new Chart(ctx, {
+				new Chart("chart", {
 					type: 'pie',
 					data: {
 					labels : labels,
