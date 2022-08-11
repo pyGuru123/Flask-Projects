@@ -26,6 +26,10 @@
 				padding: 3px;
 				padding-left : 10px;
 			}
+
+			h2 {
+				text-align: center;
+			}
 		</style>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 	</head>
@@ -57,10 +61,14 @@
 			{% if result %}
 				var data = [];
 				var labels = [];
+				var colors = [];
 				{% for key, value in result['stats'].items() %}
-					labels.push['{{key}}'];
-					data.push[{{value['v']}}];
+					labels.push('{{key}}');
+					data.push({{value['v']}});
+					colors.push(`rgb(${getPixel()}, ${getPixel()}, ${getPixel()})`);
 				{% endfor %}
+				console.log(data);
+				console.log(labels);
 
 				const ctx = document.getElementById('chart').getContext('2d');
 				new Chart(ctx, {
@@ -70,11 +78,16 @@
 					datasets : [{
 						label: 'Pollution level',
 						data: data,
+						backgroundColor : colors,
 						hoverOffset: 4
 						}]
 					}
 				});
 			{% endif %}
+
+			function getPixel() {
+				return Math.floor(Math.random() * 255)
+			}
 		</script>
 	</body>
 </html>
