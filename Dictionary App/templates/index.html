@@ -1,1 +1,174 @@
-
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Dictionary App </title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+			html, * {
+				margin : 0;
+				padding : 0;
+				box-sizing : border-box;
+			}
+			
+			.header {
+				width : 100%;
+				height : 150px;
+				background : #37c7ff;
+				border-radius : 0 0 10px 10px;
+			}
+			
+			.header h2 {
+				color : #fff;
+				padding : 15px
+			}
+			
+			.input-icons i {
+				position: absolute;
+			}
+			
+			.input-icons {
+				width: 100%;
+				margin-bottom : 10px;
+			}
+			
+			.icon {
+				transform: translate(-30px, -10px)
+				/*background-size: 100% auto;*/
+			}
+			
+			.subbtn {
+			/*transform: translate(-10px, -10px);*/
+			border: none;
+			background: none;
+			}
+			
+			.header input {
+				border : none;
+				outline : none;
+				margin-left : 15px;
+				height: 22px;
+				padding: 15px;
+				padding-left: 15px;
+				width: 80%;
+				border-radius: 2px;
+			}
+			
+			::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+				color: rgb(78,193,246);
+				opacity: 0.7;
+				font-weight: 500;
+			}
+			
+			.result {
+				margin-top: 10px;
+				padding: 15px;
+				width: 100%;
+			}
+			
+			.result h2 {
+				font-size : 27px;
+				font-weight : 550;
+				color : #5dbb63;
+				user-select : none;
+			}
+			
+			.pos {
+				font-size: 14px;
+				color: rgb(42, 42, 42);
+				padding-left: 3px;
+			}
+			
+			.speaker {
+				float: right;
+				margin-right: 20px;
+				font-size: 40px;
+				transform: translate(0, -40px);
+				outline : none;
+				text-decoration : none;
+				color: #5dbb63;
+			}
+			
+			.meaning, .example {
+				padding: 10px;
+				word-wrap: break-word;
+				margin-top: 20px;
+				border-left: 2px solid #5dbb63;
+				border-radius : 5px;
+				color: rgb(32, 32, 32);
+				opacity: 0.8;
+			}
+			
+			.example {
+				border: none;
+				color : rgb(32, 32, 32);
+			}
+			
+			.ex {
+				color : #37c7ff;
+			}
+		</style>
+		</head>
+	</head>
+	<body>
+		<div class="header">
+			<h2> Dictionary </h2>
+			<form id="form" action="http://127.0.0.1:5000/word" method="POST">
+				<div class="input-icons">
+					<input type="input" name="word" placeholder="Search Word" autocomplete="off">
+					<button type="submit" class="subbtn">
+						<i class="fa fa-search icon" aria-hidden="true"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+		<div class="result">
+			{% if data and data|length > 2 %}
+				<div class="info">
+					<h2 class="word"> {{data[0]}} </h2>
+					<p class="pos" >{{data[2]}} {{data[1]}} </p>
+					<span>
+						<i class="fa fa-volume-up speaker"></i>
+					</span>
+				</div>
+				{% for definition in data[3][:3] %}
+					<div class="meaning">
+						<span> {{definition["definition"] }}
+						</span>
+					</div>
+				{% endfor %}
+				
+				{% if data[3][0].get("example", None) %}
+					<div class="example">
+						<p> <span class="ex"> Example : </span> {{data[3][0]["example"]}}
+						</p>
+					</div>
+				{% endif %}
+				
+			{% elif data and data|length == 2%}
+				<div class="meaning">
+					<span> {{data[1]}} </span>
+				</div>
+			{% endif %}
+		</div>
+		
+		<script>
+			{% if data and data|length > 2 %}
+			
+				const speaker = document.querySelector('.speaker');
+				const word = document.querySelector(".word");
+				
+				speaker.addEventListener('click', function() {
+					speak({{data[0]}});
+					word.style.color = "red";
+				});
+				
+				function speak(word) {
+					msg = new window.SpeechSynthesisUtterance(word);
+					window.speechSynthesis.cancel();
+					window.speechSynthesis.speak(msg);
+				}
+			{% endif %}
+		</script>
+	</body>
+</html>
