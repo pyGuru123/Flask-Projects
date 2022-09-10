@@ -14,8 +14,7 @@ def downloadVideo():
 		yt = YouTube(url)
 		title = yt.title
 		thumbnail = yt.thumbnail_url
-		streams = yt.streams
-		print(thumbnail)
+		streams = yt.streams.filter(file_extension='mp4')
 		data = [title, thumbnail, streams]
 		
 		return render_template("downloadPage.html", data=data)
