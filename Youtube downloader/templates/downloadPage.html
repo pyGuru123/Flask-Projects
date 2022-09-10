@@ -3,13 +3,22 @@
 	<head>
 		<title> ytDownloader </title>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="stylesheet" href="static/css/downloadPage.css">
 	</head>
 	<body>
-		<img src="" class="thumbnail">
-		<h2> {{data[0]}} </h2>
+		<div class="videoinfo">
+			<img src="" class="thumbnail">
+			<h2> {{data[0]}} </h2>
+		</div>
+		<div class="quality">
+			{% for stream in data[2] %} 
+				<h2> {{stream}} </h2>
+			{% endfor %}
+		</div>
 	</body>
 	<script>
-		const image = document.querySelector(".thumbnail");
-		image.src = {{data[1]}};
+		let image = document.querySelector("img");
+		let url = `{{data[1]}}`;
+		image.src = `${url}`;
 	</script>
 </html>
