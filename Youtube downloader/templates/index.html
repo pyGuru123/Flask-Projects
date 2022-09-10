@@ -16,9 +16,9 @@
 				<p> MP4, MP3 for free </p>
 			</div>
 			<div class="dform">
-				<form>
+				<form action="http://127.0.0.1:5000/download", method="POST">
 					<div class="inputfield">
-						<input type="input" name="url" placeholder="Search or Paste youtube link here" autocomplete="off">
+						<input type="input" name="videourl" placeholder="Search or Paste youtube link here" autocomplete="off">
 						<button type="submit"> Download </button>
 					</div>
 				</form>
@@ -27,12 +27,6 @@
 		
 		<script>
 			const btn = document.querySelector("button");
-			btn.onclick = function() {
-				chrome.downloads.download({
-					filename : "file.pdf",
-					url : "https://ftl.deekshith.eu.org/846592/Tg_%40StreamersHub_House_of_the_Dragon_S01E01_The_Heirs_of_the_Dragon.mkv?hash=AgADsw"
-				});
-			}
 		</script>
 	</body>
 </html>
