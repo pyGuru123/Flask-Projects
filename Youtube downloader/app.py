@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	return render_template("index.html", data=None)
 	
 @app.route("/download", methods=["POST", "GET"])
 def downloadVideo():
@@ -18,7 +18,7 @@ def downloadVideo():
 			streams = yt.streams.filter(file_extension='mp4')
 			data = [title, thumbnail, streams]
 			
-			return render_template("downloadPage.html", data=data)
+			return render_template("index.html", data=data)
 	
 # https://youtu.be/jiY4PgUW7aA
 if __name__ == "__main__":

@@ -8,24 +8,46 @@
 	<body>
 		<div class="main">
 			<div class="header">
-				<div>
-					<img src="static/img/icon.png" width="48" height="48">
-					<h2> Youtube Downloader </h2>
-				</div>
-				<div>
-					<p> Convert and download youtube videos </p>
-					<p> in MP4 for free </p>
-				</div>
+					<div>
+						<img src="static/img/icon.png" width="48" height="48">
+						<h2> Youtube Downloader </h2>
+					</div>
+					<div>
+						<p> Convert and download youtube videos </p>
+						<p> in MP4 for free </p>
+					</div>
 			</div>
 			
-			<div class="dform">
-				<form action="http://127.0.0.1:5000/download", method="POST">
-					<div class="inputfield">
-						<input type="input" name="videourl" placeholder="Search or Paste youtube link here" autocomplete="off">
-						<button type="submit"> Download </button>
-					</div>
-				</form>
-			</div>
+			{% if not data %}
+				<div class="dform">
+					<form action="http://127.0.0.1:5000/download", method="POST">
+						<div class="inputfield">
+							<input type="input" name="videourl" placeholder="Search or Paste youtube link here" autocomplete="off">
+							<button type="submit"> Download </button>
+						</div>
+					</form>
+				</div>
+			{% else %}
+				<div class="videoinfo">
+					<img src="" class="thumbnail">
+					<h2> {{data[0]}} </h2>
+				</div>
+				<div class="quality">
+					<select id="streams">
+						{% for stream in data[2][:3] %} 
+							<option value="{{stream.itag}}"> {{stream.itag}} </option>
+						{% endfor %}
+					</select>
+				</div>
+			{% endif %}
 		</div>
+
+			<script>
+				const image = document.querySelector(".thumbnail");
+				const select = document.querySelector("select");
+
+				let url = `{{data[1]}}`;
+				image.src = `${url}`;
+			</script>
 	</body>
 </html>
