@@ -11,13 +11,14 @@ def index():
 def downloadVideo():
 	if request.method == "POST":
 		url = request.form["videourl"]
-		yt = YouTube(url)
-		title = yt.title
-		thumbnail = yt.thumbnail_url
-		streams = yt.streams.filter(file_extension='mp4')
-		data = [title, thumbnail, streams]
-		
-		return render_template("downloadPage.html", data=data)
+		if url:
+			yt = YouTube(url)
+			title = yt.title
+			thumbnail = yt.thumbnail_url
+			streams = yt.streams.filter(file_extension='mp4')
+			data = [title, thumbnail, streams]
+			
+			return render_template("downloadPage.html", data=data)
 	
 # https://youtu.be/jiY4PgUW7aA
 if __name__ == "__main__":
