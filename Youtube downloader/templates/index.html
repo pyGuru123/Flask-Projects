@@ -35,19 +35,28 @@
 				<div class="quality">
 					<select id="streams">
 						{% for stream in data[2][:3] %} 
-							<option value="{{stream.itag}}"> {{stream.itag}} </option>
+							<option value="{{stream.itag}}"> {{stream.resolution}} </option>
 						{% endfor %}
 					</select>
 				</div>
 			{% endif %}
 		</div>
 
-			<script>
+			<script type="text/javascript">
 				const image = document.querySelector(".thumbnail");
 				const select = document.querySelector("select");
 
 				let url = `{{data[1]}}`;
-				image.src = `${url}`;
+					if (image) {
+						image.src = `${url}`;
+
+						window.addEventListener('change', function() {
+							var option = select.options[select.selectedIndex].value;
+							console.log(option);
+							{% set stream = data[3].get_by_itag(option) %}
+							{% stream.download() %}
+					});
+				}
 			</script>
 	</body>
 </html>

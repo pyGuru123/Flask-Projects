@@ -16,7 +16,7 @@ def downloadVideo():
 			title = yt.title
 			thumbnail = yt.thumbnail_url
 			streams = yt.streams.filter(file_extension='mp4')
-			data = [title, thumbnail, streams]
+			data = [title, thumbnail, streams, yt]
 			
 			return render_template("index.html", data=data)
 	
