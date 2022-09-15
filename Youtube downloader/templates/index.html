@@ -47,21 +47,20 @@
 
 			<script type="text/javascript">
 				{% if data %}
+					let name = `{{data[0]}}`;
+					let imgurl = `{{data[1]}}`;
 					let link = `{{data[3]}}`;
+
 					const image = document.querySelector(".thumbnail");
 					const select = document.querySelector("select");
 					const form = document.querySelector(".downloadVideo");
-					const subbtn = document.querySelector(".submit");
 
-					subbtn.style.display = "none";
-
-					let url = `{{data[1]}}`;
 						if (image) {
-							image.src = `${url}`;
+							image.src = `${imgurl}`;
 
 							window.addEventListener('change', function() {
 								var option = select.options[select.selectedIndex].value;
-								form.action = `http://127.0.0.1:5000/download?url=${link}&itag=${option}`;
+								form.action = `http://127.0.0.1:5000/download?url=${link}&itag=${option}&name=${name}`;
 								form.submit();
 						});
 					}

@@ -25,6 +25,7 @@ def fetchVideo():
 def downloadVideo():
 		url = request.args.get("url", None)
 		itag = request.args.get("itag", None)
+		name = request.args.get("name", None)
 		yt = YouTube(url)
 		video = yt.streams.get_by_itag(str(itag))
 		buffer = BytesIO()
@@ -34,7 +35,7 @@ def downloadVideo():
 		return send_file(
 			buffer,
 			as_attachment=True,
-			attachment_filename="cool-video.mp4",
+			attachment_filename=name,
 			mimetype="video/mp4",
 		)
 	
