@@ -17,14 +17,15 @@ def fetchVideo():
 			title = yt.title
 			thumbnail = yt.thumbnail_url
 			streams = yt.streams.filter(file_extension='mp4')
-			data = [title, thumbnail, streams, yt]
+			data = [title, thumbnail, streams, url]
 			
 			return render_template("index.html", data=data)
 
-@app.route("/download/<itag>", methods=["POST", "GET"])
-def downloadVideo(itag):
-	if itag:
-		yt = YouTube("https://youtu.be/jiY4PgUW7aA")
+@app.route("/download/", methods=["POST", "GET"])
+def downloadVideo():
+		url = request.args.get("url", None)
+		itag = request.args.get("itag", None)
+		yt = YouTube(url)
 		video = yt.streams.get_by_itag(str(itag))
 		buffer = BytesIO()
 		video.stream_to_buffer(buffer)

@@ -47,6 +47,7 @@
 
 			<script type="text/javascript">
 				{% if data %}
+					let link = `{{data[3]}}`;
 					const image = document.querySelector(".thumbnail");
 					const select = document.querySelector("select");
 					const form = document.querySelector(".downloadVideo");
@@ -60,7 +61,7 @@
 
 							window.addEventListener('change', function() {
 								var option = select.options[select.selectedIndex].value;
-								form.action = `http://127.0.0.1:5000/download/${option}`;
+								form.action = `http://127.0.0.1:5000/download?url=${link}&itag=${option}`;
 								form.submit();
 						});
 					}
