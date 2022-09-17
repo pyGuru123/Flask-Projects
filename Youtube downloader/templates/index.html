@@ -39,7 +39,6 @@
 								<option value="{{stream.itag}}"> {{stream.resolution}} </option>
 							{% endfor %}
 						</select>
-						<input class="submit" type="submit" name="Submit">
 					</form>
 				</div>
 			{% endif %}
@@ -60,7 +59,7 @@
 
 							window.addEventListener('change', function() {
 								var option = select.options[select.selectedIndex].value;
-								form.action = `http://127.0.0.1:5000/download?url=${link}&itag=${option}&name=${name}`;
+								form.action = `http://127.0.0.1:5000/download?itag=${option}`;
 								form.submit();
 						});
 					}

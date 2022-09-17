@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, session
+from flask_session import Session
 from pytube import YouTube
 from io import BytesIO
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 @app.route("/")
 def index():
@@ -18,16 +22,15 @@ def fetchVideo():
 			thumbnail = yt.thumbnail_url
 			streams = yt.streams.filter(file_extension='mp4')
 			data = [title, thumbnail, streams, url]
+			session["video"] = yt
 			
 			return render_template("index.html", data=data)
 
 @app.route("/download/", methods=["POST", "GET"])
 def downloadVideo():
-		url = request.args.get("url", None)
 		itag = request.args.get("itag", None)
-		name = request.args.get("name", None)
-		yt = YouTube(url)
-		video = yt.streams.get_by_itag(str(itag))
+		name = session["video"].title
+		video = session["video"].streams.get_by_itag(str(itag))
 		buffer = BytesIO()
 		video.stream_to_buffer(buffer)
 		buffer.seek(0)
