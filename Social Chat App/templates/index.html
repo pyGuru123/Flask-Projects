@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Threads</title>
+	<style type="text/css">
+		h2 {
+			color: rgb(18, 18, 128);
+			text-align: center;
+			line-height: 60px;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<h2>Threads</h2>
+		</div>
+		<div class="posts">
+			{% for post in posts %}
+				<div>
+					{{post[0]}}
+					{{post[1]}}
+					{{post[2]}}
+					{{post[2]}}
+				</div>
+			{% endfor %}
+		</div>
+		<div class="form">
+			<form action="http://127.0.0.1:5000/" method="POST">
+				<input type="text" name="username">
+				<input type="text" name="content">
+				<input type="submit" name="submit">
+			</form>
+		</div>
+	</div>
+</body>
+</html>
