@@ -20,7 +20,6 @@ Download this project from here [Download Youtube Downloader](https://downgit.gi
 ## Requirements
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install following packages :-
-* Pygame
 
 ```bash
 pip install flask
