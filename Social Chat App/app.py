@@ -7,13 +7,14 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def homepage():
 	if request.method == "POST":
-		username = request.form["username"]
-		content = request.form["content"]
+		username = request.form.get("username", None)
+		content = request.form.get("content", None)
 		dt = datetime.now()
-		create_post(username, content, dt)
+		if username and content:
+			create_post(username, content, dt)
 
 	posts = fetch_posts()
 	return render_template("index.html", posts=posts)
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run()

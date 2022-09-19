@@ -16,22 +16,57 @@
 			<h2>Threads</h2>
 		</div>
 		<div class="posts">
-			{% for post in posts %}
+			<!-- {% for post in posts %}
 				<div>
-					{{post[0]}}
-					{{post[1]}}
-					{{post[2]}}
+					<p>{{post[1]}}
+					{{post[3]}} </p>
 					{{post[2]}}
 				</div>
-			{% endfor %}
+			{% endfor %} -->
 		</div>
-		<div class="form">
-			<form action="http://127.0.0.1:5000/" method="POST">
-				<input type="text" name="username">
-				<input type="text" name="content">
-				<input type="submit" name="submit">
+		<div class="formbox">
+			<form action="/" method="POST">
+				<input type="text" name="username" placeholder="username" autocomplete="off">
+				<textarea name="content" placeholder="Enter post" rows="3" cols="30"> </textarea>
+				<input type="submit" name="submit" class="submit">
 			</form>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		const form = document.querySelector("form");
+		const submit = document.querySelector(".submit");
+		const posts = document.querySelector(".posts");
+
+		function toMonthName(monthNumber) {
+		  const date = new Date();
+		  date.setMonth(monthNumber - 1);
+
+		  return date.toLocaleString('en-US', {
+		    month: 'short',
+		  });
+		}
+
+		{% for post in posts %}
+			var dt = `{{post[3]}}`;
+			var date = new Date(`${dt}`);
+			var datetime = toMonthName(date.getMonth()+1) + " " +  date.getDate() + "," + date.getFullYear() + 
+			" " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+			
+			var div = document.createElement("div");
+			var p1 = document.createElement("p");
+			p1.innerHTML = datetime
+			var p2 = document.createElement("p");
+			p2.innerHTML = `{{post[1]}}`;
+			p2.style.weight = "550";
+			var p3 = document.createElement("p");
+			p3.innerHTML = `{{post[2]}}`
+			div.appendChild(p1);
+			div.appendChild(p2);
+			div.appendChild(p3);
+			posts.appendChild(div);
+
+		{% endfor %}
+	</script>
 </body>
 </html>
