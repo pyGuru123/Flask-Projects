@@ -1,1 +1,94 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
+body {
+	background-color: rgb(44,45,54);
+}
+
+h2, p {
+	font-size: 16px;
+	font-family: 'Roboto';
+	color: rgb(218, 218, 218);
+	text-align: center;
+	margin: 10px;
+	color: rgb(0,249,182);
+	text-shadow: 2px 2px 2px rgb(30, 30, 30);
+}
+
+p {
+	font-size: 14px;
+	color: #f0f6ab;
+}
+
+.main {
+	border: 0.1px solid black;
+	width: 100%;
+	height: 100vh;
+	background-color: rgb(47,49,58);
+	/*display: flex;
+	justify-content: center;*/
+    padding: 10px;
+}
+
+.form-box {
+	width: 90%;
+	margin: auto;
+}
+
+input[type="text"] {
+	width: 100%;
+	height:150px;
+	text-align: center;
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 300;
+	font-size: 15px;
+	border-radius: 10px;
+}
+
+input[type="submit"] {
+	width: 80px;
+	height: 42px;
+	outline: none;
+	border: none;
+	padding: 5px;
+	margin: 8px;
+	cursor: pointer;
+	font-weight: 400;
+	color: rgb(18, 18, 18);
+	background-color: #00f9b6;
+	border-radius: 5px;
+	margin-left: 40%;
+}
+
+input[type="submit"]:hover {
+	background-color: #07bf8b;
+	color: rgb(232, 232, 232);
+	user-select: none;
+}
+
+.text {
+	word-wrap: break-word;
+	padding: 5px;
+}
+
+.output-box {
+	overflow-y: auto;
+	width: 90%;
+	display: flex;
+	margin: auto;
+}
+
+img {
+	width: 300px;
+	height: 250px;
+	border-radius: 15px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
