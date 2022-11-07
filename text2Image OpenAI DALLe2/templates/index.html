@@ -1,1 +1,36 @@
-
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Image Gen AI </title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="stylesheet" href="static/style.css">
+	</head>
+	<body>
+		<h2> Text 2 Image Generator AI </h2>
+		<p> This webapp can generate artificial images for you based on the textual description using OpenAI DallE2 Api </p>
+		<div class="main">
+			<div class="form-box">
+				<form action="/" method="POST">
+					<div>
+						<input type="text" name="desc" placeholder="Enter image description to generate" autocomplete="off">
+					</div>
+					<div>
+						<input type="submit" value="Generate">
+					</div>
+				</form>
+			</div>
+			<div class="text">
+					{% if text %}
+						<p> {{text}} </p>
+					{% endif %}
+			</div>
+			<div class="output-box">
+				{% if images %}
+					<img src="{{images[0]}}">
+					<img src="{{images[1]}}">
+					<img src="{{images[2]}}">
+				{% endif %}
+			</div>
+		</div>
+	</body>
+</html>
