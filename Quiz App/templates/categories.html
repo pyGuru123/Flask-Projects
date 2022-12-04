@@ -40,33 +40,54 @@
 				<h2> Categories </h2>
 			</div>
 		</div>
-		<div class="row page">
-			
-		</div>
+		<div class="row page"></div>
+		<form method="POST"></form>
 	</div>
 	
 	<script type="text/javascript">
 		const page = document.querySelector('.page');
-		const images = ['baby.png', 'books.png', 'camera.png', 'car.png', 'computer.png', 'cosmetics.png',
-			'food.png', 'guitar.png', 'horse.png', 'house.png', 'light.png', 'sports.png', 'stationary.png', 'vinyl.png']
-		const labels = ['Baby', 'Books', 'DVD & Bluray', 'Car & Bike', 'Computers', 'Beauty', 'Grocery', 'Musical Instruments', 'Toys', 'Kitchen & Home', 'Lighting', 'Sports', 'Stationary', 'Vinyl']
+		const form = document.querySelector('form');
 
-		for (var i=0; i<14; i++) {
+		document.onclick = function(e) {
+			e.preventDefault();
+		}
+
+		const images = ['baby.png', 'books.png', 'camera.png', 'car.png', 'computer.png', 'cosmetics.png',
+			'food.png','phone.png', 'guitar.png', 'horse.png', 'house.png', 'light.png', 'sports.png', 'stationary.png', 'vinyl.png']
+		const labels = ['Baby', 'Books', 'DVD & Bluray', 'Car & Bike', 'Computers', 'Beauty', 'Grocery', 'Smartphone', 'Musical Instruments', 'Toys', 'Kitchen & Home', 'Lighting', 'Sports', 'Stationary', 'Vinyl']
+
+		for (var i=0; i<15; i++) {
 			let div = document.createElement('div');
 			div.className = "col col-6 col-md-4 mt-3 pt-1 category";
 
 			let img = document.createElement('img');
-			img.src = "static/images/" + images[i];
+			img.src = "static/icons/" + images[i];
 			img.className = 'icon';
 
 			let span = document.createElement('span');
 			let txt = document.createTextNode(labels[i]);
 			span.appendChild(txt);
 
+			let category = labels[i];
+
 			div.appendChild(img);
 			div.appendChild(span);
+			div.onclick = function(e) {
+				e.preventDefault();
+				submit(category);
+			};
 			page.appendChild(div);
 		} 
+
+		function submit(category) {
+				form.action = '/instructions';
+				let input = document.createElement('input');
+				input.type = "hidden";
+				input.name = "category";
+				input.value = category;
+				form.appendChild(input);  
+				form.submit();
+			}
 	</script>
 </body>
 </html>
