@@ -19,13 +19,11 @@
 			border-radius: 10px;
 		}
 		.icon {
+			margin-right: 4px;
 			width: 64px;
 			height: 64px;
 			border-radius: 50%;
 			border: 2px solid yellow;
-		}
-		span {
-			padding-left: 2px;
 		}
 	</style>
 
@@ -55,7 +53,7 @@
 
 		for (var i=0; i<14; i++) {
 			let div = document.createElement('div');
-			div.className = "col col-4 mt-3 pt-1 category";
+			div.className = "col col-6 col-md-4 mt-3 pt-1 category";
 
 			let img = document.createElement('img');
 			img.src = "static/images/" + images[i];
