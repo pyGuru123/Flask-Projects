@@ -3,27 +3,74 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	<link rel="stylesheet" href="">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title> Quiz App</title>
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<!-- JavaScript Bundle with Popper -->
+	<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	
+	<style type="text/css">
+		.container {
+			width: 80%;
+		}
+		.header {
+			background: rgb(60,175,221);
+		}
+		.icon {
+			width: 32px;
+			height: 32px;
+		}
+
+		.pic {
+			width: 400px;
+			height: 480px;
+		}
+	</style>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="col col-12">
-				{{data}}
+	<div class="container mt-3 p-2">
+		<div class="row header p-2">
+			<div class="col col-2 text-end">
+				<img src="static/icons/{{data['icon']}}" class="icon">
+			</div>
+			<div class="col col-3 text-start pl-2">
+				{{data['category']}}
+			</div>
+			<div class="col col-7 text-end">
+				{{data['id']}}/10
 			</div>
 		</div>
-		<div class="row">
-			<div class="col col-6">
+		<div class="row text-start">
+			<div class="col col-6 pl-5">
+				<img src="static/images/{{data['pic']}}.jpg" class="pic">
 			</div>
 			<div class="col col-6">
 			</div>
 		</div>
+		<div class="row text-center">
+			<div class="btn btn-primary">
+				Next
+			</div>
+		</div>
+		<form action='/quiz' method="POST"></form>
 	</div>
 
 	<script type = "text/javascript" >  
-		window.onbeforeunload = function() { 
-			return "Your work will be lost."; 
+		const btn = document.querySelector('.btn');
+		const form = document.querySelector('form');
+
+		let id = `{{data['id']}}`;
+		if (id == 10) {
+			btn.innerHTML = 'Submit';
+		}
+		btn.onclick = function() {
+			const input = document.createElement('input');
+			input.type = "hidden";
+			input.name = "input";
+			input.value = `{{data['id'] + 1}}`;
+			form.appendChild(input);
+			form.submit();
 		}
 	</script>
 </body>
