@@ -13,6 +13,7 @@
 	<style type="text/css">
 		.container {
 			width: 80%;
+			user-select: none;
 		}
 		.header {
 			background: rgb(60,175,221);
@@ -23,8 +24,12 @@
 		}
 
 		.pic {
-			width: 400px;
-			height: 480px;
+			width: 388px;
+			height: 460px;
+		}
+
+		.btn {
+			width: 120px;
 		}
 	</style>
 </head>
@@ -41,33 +46,47 @@
 				{{data['id']}}/10
 			</div>
 		</div>
-		<div class="row text-start">
-			<div class="col col-6 pl-5">
+		<div class="row">
+			<div class="col col-5 p-3">
 				<img src="static/images/{{data['pic']}}.jpg" class="pic">
 			</div>
-			<div class="col col-6">
+			<div class="col col-7 pt-5">
+				<div class="row">
+					<h2>{{data['question']}}</h2>	
+				</div>
+				<div class="row">
+					<p>{{data['description']}}</p>	
+				</div>
+				<div class="row">
+					<form action="/quiz" method="POST">
+						<label for="price" class="form-label mt-3">Enter Guess Price</label>
+						<input type="text" name="price" class="form-control">
+					</form>
+				</div>
+				<div class="row">
+					<div class="btn btn-primary m-3 next">
+						Next
+					</div>	
+				</div>
 			</div>
 		</div>
-		<div class="row text-center">
-			<div class="btn btn-primary">
-				Next
-			</div>
-		</div>
-		<form action='/quiz' method="POST"></form>
 	</div>
 
 	<script type = "text/javascript" >  
-		const btn = document.querySelector('.btn');
+		window.history.forward();
+
+		const next = document.querySelector('.next');
+		const exit = document.querySelector('.exit');
 		const form = document.querySelector('form');
 
 		let id = `{{data['id']}}`;
 		if (id == 10) {
-			btn.innerHTML = 'Submit';
+			next.innerHTML = 'Submit';
 		}
-		btn.onclick = function() {
+		next.onclick = function() {
 			const input = document.createElement('input');
 			input.type = "hidden";
-			input.name = "input";
+			input.name = "nextId";
 			input.value = `{{data['id'] + 1}}`;
 			form.appendChild(input);
 			form.submit();

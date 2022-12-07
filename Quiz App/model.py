@@ -14,6 +14,7 @@ if not os.path.exists(db_path):
 			index INTEGER PRIMARY KEY AUTOINCREMENT,
 			id INTEGER NOT NULL,
 			question TEXT NOT NULL,
+			description TEXT,
 			category TEXT NOT NULL,
 			answer INT NOT NULL
 		);
@@ -24,7 +25,8 @@ if not os.path.exists(db_path):
 def populateTable():
 	conn = sql.connect(db_path)
 	cursor = conn.cursor()
-	df = pandas.read_csv('questions.csv')
+	df = pandas.read_excel('questions.xlsx')
+	print(df)
 	df.to_sql('questions', conn, if_exists="fail", index=False)
 	conn.close()
 
