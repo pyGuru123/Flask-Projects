@@ -53,13 +53,15 @@ def signupPage():
 @app.route('/categories', methods=["GET", "POST"])
 def categoriesPage():
 	if session.get('category'):
-		print(True)
 		session.pop('category')
+	if session.get('answers'):
+		session.pop('answers')
 
 	if request.method == "POST":
 		category = request.form['category']
 		if not session.get('category'):
 			session['category'] = category
+			session['answers'] = []
 			session.modified = True
 		return redirect(url_for('instructionsPage'))
 
@@ -81,6 +83,10 @@ def quizPage():
 
 		questions = session['questions']
 		id = int(request.form['nextId'])
+		if 'price' in request.form:
+			session['answers'].append(request.form['price'])
+			session.modified = True
+
 		if id <= 10:
 			question = questions[id-1]
 			icon = categories[question[3]]
@@ -97,6 +103,7 @@ def quizPage():
 
 			return render_template('quiz.html', data=data)
 		else:
+			print(session['answers'])
 			return redirect(url_for('submitPage'))
 
 @app.route('/submit', methods=["GET", "POST"])

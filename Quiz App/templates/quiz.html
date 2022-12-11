@@ -17,6 +17,9 @@
 		}
 		.header {
 			background: rgb(60,175,221);
+			color: white;
+			font-weight: 600;
+			line-height: 2;
 		}
 		.icon {
 			width: 32px;
@@ -44,7 +47,7 @@
 			<div class="col col-2 text-end">
 				<img src="static/icons/{{data['icon']}}" class="icon">
 			</div>
-			<div class="col col-3 text-start pl-2">
+			<div class="col col-3 text-start pl-2 category">
 				{{data['category']}}
 			</div>
 			<div class="col col-7 text-end">
@@ -64,14 +67,17 @@
 				</div>
 				<div class="row">
 					<form action="/quiz" method="POST">
-						<label for="price" class="form-label mt-3">Enter Guess Price</label>
-						<input type="text" name="price" class="form-control">
+						<label for="price" class="form-label mt-3 guesslabel">Enter Guess Price</label>
+						<input type="number" name="price" class="form-control price">
 					</form>
 				</div>
 				<div class="row">
 					<div class="btn btn-primary m-3 next">
 						Next
 					</div>	
+				</div>
+				<div class="progress">
+			    	<div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
 				</div>
 			</div>
 		</div>
@@ -83,18 +89,29 @@
 		const next = document.querySelector('.next');
 		const exit = document.querySelector('.exit');
 		const form = document.querySelector('form');
+		const progress = document.querySelector('.progress-bar');
+		const inputprice = document.querySelector('.price');
+		const guesslabel = document.querySelector('.guesslabel');
 
 		let id = `{{data['id']}}`;
 		if (id == 10) {
 			next.innerHTML = 'Submit';
 		}
+		progress.setAttribute('aria-valuenow', id*10);
+		progress.setAttribute('style', `width: ${id*10}%`);
 		next.onclick = function() {
-			const input = document.createElement('input');
-			input.type = "hidden";
-			input.name = "nextId";
-			input.value = `{{data['id'] + 1}}`;
-			form.appendChild(input);
-			form.submit();
+			event.preventDefault();
+			if (inputprice.value) {
+				const input = document.createElement('input');
+				input.type = "hidden";
+				input.name = "nextId";
+				input.value = `{{data['id'] + 1}}`;
+				form.appendChild(input);
+				form.submit();
+			}
+			else {
+				guesslabel.setAttribute('style', 'color:red');
+			}
 		}
 	</script>
 </body>
