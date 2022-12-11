@@ -22,10 +22,15 @@
 			width: 32px;
 			height: 32px;
 		}
+		.query {
+			height: 450px;
+			border: 1px solid black;
+			overflow-y: scroll;
+		}
 
 		.pic {
-			width: 388px;
-			height: 460px;
+			width: 100%;
+			height: 420px;
 		}
 
 		.btn {
@@ -46,8 +51,8 @@
 				{{data['id']}}/10
 			</div>
 		</div>
-		<div class="row">
-			<div class="col col-5 p-3">
+		<div class="row query">
+			<div class="col col-5 p-3 image text-center">
 				<img src="static/images/{{data['pic']}}.jpg" class="pic">
 			</div>
 			<div class="col col-7 pt-5">

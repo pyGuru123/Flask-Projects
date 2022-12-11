@@ -1,7 +1,7 @@
 import requests
 from flask import Flask, render_template, url_for, request, session, redirect
 from flask_session import Session
-from model import fetchQuestions
+from model import fetchQuestions, fetchUsernames, registerUser
 
 app = Flask(__name__, static_url_path='/static')
 app.config["SESSION_PERMANENT"] = False
@@ -26,14 +26,12 @@ categories = {
 	'Smartphone' : 'phone.png'
 }
 
-
 @app.route('/', methods=["GET", "POST"])
 @app.route('/login', methods=["GET", "POST"])
 def loginPage():
 	if request.method == "POST":
 		username = request.form["username"]
 		password = request.form["password"]
-		print(username)
 		if username:
 			session['username'] = username
 			return redirect(url_for('categoriesPage'))
@@ -42,11 +40,20 @@ def loginPage():
 
 @app.route('/signup', methods=["GET", "POST"])
 def signupPage():
-	return render_template('signup.html')
+	if request.method == "POST":
+		username = request.form["username"]
+		email = request.form["password"]
+		password = request.form["username"]
+		registerUser(username, email, password)
+		return redirect(url_for('loginPage'))
+
+	usernames = fetchUsernames()
+	return render_template('signup.html', usernames=usernames)
 
 @app.route('/categories', methods=["GET", "POST"])
 def categoriesPage():
 	if session.get('category'):
+		print(True)
 		session.pop('category')
 
 	if request.method == "POST":
@@ -94,6 +101,8 @@ def quizPage():
 
 @app.route('/submit', methods=["GET", "POST"])
 def submitPage():
+	questions = session['questions']
+	session.pop('questions')
 	return render_template('submit.html')
 
 if __name__ == "__main__":

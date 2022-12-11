@@ -29,20 +29,28 @@
 			Signup
 		</div>
 
-		<form class="mt-2">
-			<label for="username" class="form-label"> Username</label>
-			<input type="text" name="username" class="form-control"/>
-
-			<label for="email" class="form-label mt-3"> Email</label>
-			<input type="email" name="email" class="form-control"/>
-
-			<label for="password" class="form-label mt-3"> Password</label>
-			<div class="input-group">
-				<input type="password" name="password" class="form-control pr-3 passwd"/>
-				<div class="input-group-append border">
-					<span class="input-group-addon">
-						<i class="fa fa-eye p-2" aria-hidden="true"></i>
-					</span>
+		<form class="mt-2" action="/signup" method="POST">
+			<div class="row">
+				<label for="username" class="form-label"> Username</label>
+				<input type="text" name="username" class="form-control username"/ required>
+				<div class="invalid-feedback"> username already taken </div>	
+			</div>
+			
+			<div class="row">
+				<label for="email" class="form-label mt-3"> Email</label>
+				<input type="email" name="email" class="form-control email"/ required>
+				<div class="invalid-feedback"> Invalid Email </div>
+			</div>
+			
+			<div class="row">
+				<label for="password" class="form-label mt-3"> Password</label>
+				<div class="input-group">
+					<input type="password" name="password" class="form-control pr-3 passwd"/ required>
+					<div class="input-group-append border">
+						<span class="input-group-addon">
+							<i class="fa fa-eye p-2" aria-hidden="true"></i>
+						</span>
+					</div>
 				</div>
 			</div>
 
@@ -51,19 +59,52 @@
 	</div>
 
 	<script type="text/javascript">
-			const passwd = document.querySelector('.passwd');
-			const eye = document.querySelector('.fa-eye');
-			console.log(eye.className);
-			eye.addEventListener('click', function eyeclick() {
-				if (eye.className == "fa fa-eye p-2") {
-					eye.className = "fa fa-eye-slash p-2";
-					passwd.type="text";
-				}
-				else {
-					eye.className = "fa fa-eye p-2";
-					passwd.type="password";
-				}
-			})
+		const username = document.querySelector('.username');
+		const email = document.querySelector('.email');
+		const passwd = document.querySelector('.passwd');
+		const eye = document.querySelector('.fa-eye');
+		const btn = document.querySelector('.btn');
+		const form = document.querySelector('form');
+
+		eye.addEventListener('click', function eyeclick() {
+			if (eye.className == "fa fa-eye p-2") {
+				eye.className = "fa fa-eye-slash p-2";
+				passwd.type="text";
+			}
+			else {
+				eye.className = "fa fa-eye p-2";
+				passwd.type="password";
+			}
+		})
+
+		username.addEventListener('blur', (event) => {
+			if (username.value && !validusername()) {
+				username.classList.add('is-invalid');
+			}
+			else {
+				username.classList.remove('is-invalid');
+			}
+		}, true)
+
+		btn.addEventListener('click', (event) => {
+			event.preventDefault();
+
+			if (username.value && email.value && passwd.value) {
+				form.submit();
+			}
+			else {
+				form.classList.add('was-validated');
+			}
+		}, true);
+
+		function validusername() {
+			name = username.value;
+			var allusers = {{ usernames|safe }}
+			if (allusers.includes(name)) {
+				return false;
+			}
+			return true;
+		}
 	</script>
 </body>
 </html>
