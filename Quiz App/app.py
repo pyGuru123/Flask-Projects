@@ -54,6 +54,8 @@ def signupPage():
 def categoriesPage():
 	if session.get('category'):
 		session.pop('category')
+	if session.get('questions'):
+		session.pop('questions')
 	if session.get('answers'):
 		session.pop('answers')
 
@@ -79,6 +81,7 @@ def quizPage():
 	if request.method == "POST":
 		if not session.get('questions'):
 			questions = fetchQuestions(session['category'])
+			print(questions)
 			session['questions'] = questions
 
 		questions = session['questions']
@@ -103,14 +106,27 @@ def quizPage():
 
 			return render_template('quiz.html', data=data)
 		else:
-			print(session['answers'])
 			return redirect(url_for('submitPage'))
 
 @app.route('/submit', methods=["GET", "POST"])
 def submitPage():
 	questions = session['questions']
-	session.pop('questions')
-	return render_template('submit.html')
+	answers = session['answers']
+	
+	data = []
+	for index, question in enumerate(questions):
+		price = question[-1]
+		guess = answers[index]
+		min = price-500
+		max = price+100
+		print(min, guess, max)
+		res = categories[session['category']].rstrip('.png') + str(question[0])
+		if min <= int(guess) <= max:
+			data.append((1, res))
+		else:
+			data.append((0, res))
+
+	return render_template('submit.html', data=data)
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(debug=True)  
