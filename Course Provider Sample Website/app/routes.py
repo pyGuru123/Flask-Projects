@@ -1,8 +1,7 @@
 from app import app, db
 from app.models import User, Course, Enrollment
-from flask import render_template, request, json, Response
-
-courseData = [{"courseID":"1111","title":"PHP 101","description":"Intro to PHP","credits":3,"term":"Fall, Spring"}, {"courseID":"2222","title":"Java 1","description":"Intro to Java Programming","credits":4,"term":"Spring"}, {"courseID":"3333","title":"Adv PHP 201","description":"Advanced PHP Programming","credits":3,"term":"Fall"}, {"courseID":"4444","title":"Angular 1","description":"Intro to Angular","credits":3,"term":"Fall, Spring"}, {"courseID":"5555","title":"Java 2","description":"Advanced Java Programming","credits":4,"term":"Fall"}]
+from app.forms import LoginForm, RegisterForm
+from flask import render_template, request, json, Response, flash, redirect
 
 @app.route("/")
 @app.route("/index")
@@ -18,11 +17,31 @@ def courses(term="2019"):
 
 @app.route('/register')
 def register():
-    return render_template("register.html", register=True)
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user_id = User.objects.count() + 1
+        email = form.email.data
+        password = form.password.data
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+    return render_template("register.html", form=form, title="New User Registration")
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    return render_template("login.html", login=True)
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+
+        user = User.objects(email=email).first()
+        if user and user.get_password(password):
+            flash(f"Hello {user.first_name}, You are now loggedin", "success")
+            return redirect("/index")
+        else:
+            flash("Incorrect email or password", "danger")
+            form = LoginForm()
+            return render_template("login.html", form=form, title="Login")
+    return render_template("login.html", form=form, title="Login")
 
 @app.route('/enrollment', methods=["GET", "POST"])
 def enrollment():
@@ -40,6 +59,7 @@ def enrollment():
 @app.route('/api')
 @app.route('/api/<id>')
 def api(id=None):
+    courseData = Course.objects.all()
     if not id:
         jData = courseData
     else:

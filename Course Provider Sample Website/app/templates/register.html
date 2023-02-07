@@ -1,19 +1,56 @@
 {% extends "layout.html" %}
    
 {% block content %}
-    <h2>New User Registration</h2>
     <div class="container">
-        <form name="register" action="register.php" method="get">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
-            <br>
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" required>
-            <br>
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-            <br class="clear">
-            <input class="btn-submit" type="submit" name="submit">
+        <form name="register" action="" method="get" novalidate>
+            <fieldset class="form-group">
+                <legend>{{title}}</legend>
+            </fieldset>
+            {{ form.hidden_tag() }}
+            <p>
+                {{form.first_name.label}}<br>
+                {{form.first_name()}}
+                {% for error in form.first_name.errors %}
+                    <span class="error-message">{{error}}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{form.last_name.label}}<br>
+                {{form.last_name()}}
+                {% for error in form.last_name.errors %}
+                    <span class="error-message">{{error}}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{form.email.label}}<br>
+                {{form.email()}}
+                {% for error in form.email.errors %}
+                    <span class="error-message">{{error}}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{form.password.label}}<br>
+                {{form.password()}}
+                {% for error in form.password.errors %}
+                    <span class="error-message">{{error}}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{form.password2.label}}<br>
+                {{form.password2()}}
+                {% for error in form.password2.errors %}
+                    <span class="error-message">{{error}}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{form.submit()}}
+            </p>
         </form>
     </div>
+{% endblock %}
+
+{% block script %}
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
 {% endblock %}

@@ -42,7 +42,7 @@ hr {
 
 input[type=text], input[type=password] {
     width: 100%;
-    padding: 15px;
+    padding: 7px;
     margin: 5px 0 22px 0;
     display: inline-block;
     border: none;
@@ -98,4 +98,8 @@ footer {
 
 dt {
     text-align: left;
+}
+
+.error-message {
+    color: red;
 }
