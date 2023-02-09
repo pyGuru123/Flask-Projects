@@ -24,4 +24,4 @@ class Course(db.Document):
 
 class Enrollment(db.Document):
     user_id = db.IntField()
-    course_id = db.StringField(max_length=10)
+    courseID = db.StringField(max_length=10)

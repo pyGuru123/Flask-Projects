@@ -3,10 +3,35 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12 text-center">
-            <h1>You are enrolled inv: </h1>
-            <h3>Course ID : {{data.courseID}}</h3>
-            <h3>Title : {{data.title}}</h3>
-            <h3>Term : {{data.term}}</h3>
+            <h1>You are enrolled in: </h1>
+
+            {% if not classes %}
+                <h3>You are not enrolled to any class yet</h3>
+            {% else %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Course ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Credits</th>
+                        <th scope="col">Term</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Construct the rest of courses here -->
+                        {% for course in classes %}
+                            <tr>
+                                <td scope='row'>{{course.r2['courseID']}}</td>
+                                <td>{{course.r2['title']}}</td>
+                                <td>{{course.r2['description']}}</td>
+                                <td>{{course.r2['credits']}}</td>
+                                <td>{{course.r2['term']}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

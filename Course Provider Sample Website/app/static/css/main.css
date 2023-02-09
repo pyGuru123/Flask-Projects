@@ -103,3 +103,12 @@ dt {
 .error-message {
     color: red;
 }
+
+.user {
+    float:right;
+    position: absolute;
+    font-size: 20px;
+    right: 4em;
+    top: 2.5em;
+    color: green;
+}

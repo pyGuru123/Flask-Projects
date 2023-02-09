@@ -18,6 +18,6 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("Register")
 
     def validate_email(self, email):
-        user = User(email=email.data).first()
+        user = User.objects(email=email.data).first()
         if user:
             raise ValidationError("Email is already in use.")

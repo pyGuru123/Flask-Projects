@@ -2,13 +2,32 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-12 text-left">
-            <h1>Welcome to Universal Tech Academy.</h1>
-            {% if login %}
+        <div class="col-md-12 text-center" style="padding-bottom:1cm;">
+            <h2>Welcome to Universal Tech Academy.</h2>
+            {% if session["username"] %}
                 <h3>Let's get started.</h3>
             {% else %}
                 <p>Already registered? <a href="{{url_for('login')}}">Login</a></p>
             {% endif %}
+        </div>
+        <br>
+        <div class="col-md-12 text-left">
+            <p style="padding-bottom:6px; font-weight: 600;">
+                UTA is a global online learning platform that offers anyone, anywhere, access to online courses and degrees from leading universities and companies.
+            </p>
+            <p>
+                UTA partners with more than 275 leading universities and companies to bring flexible, affordable, job-relevant online learning to individuals and organizations worldwide. We offer a range of learning opportunities—from hands-on projects and courses to job-ready certificates and degree programs.
+            </p>
+            <b>What can you expect from your Coursera experience?</b>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Access top-quality learning: Learn from 275+ leading universities and companies using evidence-based online teaching and learning strategies.</li>
+
+                <li class="list-group-item">Learn on your schedule: The great news is you can learn from these top institutions at your own pace, from anywhere. Our mobile app makes it easy to download videos so you can learn on the go.</li>
+
+                <li class="list-group-item">Find learning that fits your budget: You can try many courses for free, and upgrade to access assessments and earn trusted credentials.</li>
+
+                <li class="list-group-item">Gain new career skills: Build new skills by applying what you learn with courses, certificates, and degrees that help you pursue any career goal.</li>
+            </ul>
         </div>
     </div>
 {% endblock %}
