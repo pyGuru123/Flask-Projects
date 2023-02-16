@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row text-center mt-4">
+        <h3 class="col-12">Github Scraper</h3>
+        <p class="fs-5 col-12">A Fast and flexible website to scrape github for you</p>
+    </div>
+
+    <form action="/" method="get">
+        <div class="row" style="margin-top: 100px;">
+            <div class="col-1"></div>
+            <label for="username" class="col-2 col-form-label text-end">Github Username</label>
+            <div class="col-6">
+                <input type="text" placeholder="@octocat" class="form-control" id="username">
+            </div>
+            <div class="col-1">
+                <button type="submit" class="btn search-icon text-start">
+                    <img src="{{url_for('static', filename='images/search.png')}}">
+                </button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
