@@ -1,0 +1,24 @@
+<header>
+    <nav class="navbar navbar-primary bg-light">
+        <a class="navbar-brand h1" href="{{url_for('index')}}">
+            <img src="{{url_for('static', filename='images/icon.png')}}"/>
+            Github Scraper
+        </a>
+        
+        <ul class="navbar-nav flex-row">
+            <li class="nav-item p-1 {% if index %} active font-weight-bold{% endif %}">
+                <a class="nav-link" href="{{url_for('index')}}">Profile </a>
+            </li>
+            <li class="nav-item p-1 {% if repo %} active font-weight-bold{% endif %}">
+                <a class="nav-link" href="{{url_for('register')}}">Repository </a>
+            </li>
+            <li class="nav-item p-1 {% if lang %} active font-weight-bold{% endif %}">
+                <a class="nav-link" href="{{url_for('languages')}}">Languages </a>
+            </li>
+            <li class="nav-item p-1 {% if about %} active font-weight-bold{% endif %}">
+                <a class="nav-link" href="{{url_for('about')}}">About Us </a>
+            </li>
+        </ul>
+        
+    </nav>
+</header>
