@@ -7,7 +7,7 @@
     </div>
 
     <form action="/index" method="post">
-        <div class="row" style="margin-top: 100px;">
+        <div class="row form-div" style="margin-top: 100px;">
             <div class="col-1"></div>
             <label for="username" class="col-2 col-form-label text-end">Github Username</label>
             <div class="col-6">
@@ -21,46 +21,65 @@
         </div>
     </form>
 
-    <!-- User Info -->
     {% if data %}
-        <div class="row" style="margin-top: 100px;">
-            <div class="col-4 text-end">
-                <img src="{{data['avatar']}}" class="avatar"/>
-            </div>
-            <div class="col-8 pt-4">
-                <span class="fw-bold">{{data['fullname']}}</span><br/>
-                <span >{{data['username']}}</span><br/>
-                <span>{{data['bio']}}</span><br/>
-                <p>
-                    {% if data['location'] %}
-                        <img class="location-marker" src="{{url_for('static', filename='images/location2.png')}}"/>
-                        <span class="user-location">{{data['location']}}</span>
-                    {% endif %}
-                </p>
-                <ul class="list-inline">
-                    <li class="list-inline-item pe-3">
-                        <span class="li-header pe-1">Followers </span> {{data['followers']}}
-                    </li>
-                    <li class="list-inline-item pe-3">
-                        <span class="li-header pe-1">Following </span> {{data['following']}}
-                    </li>
-                    <li class="list-inline-item pe-3">
-                        <span class="li-header pe-1">Repositories </span> {{data['repositories']}}
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        {% if data["readme"] %}
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-2"></div>
-                <div class="col-8">
-                    <hr>
-                    <p class="note note-info">{{data["readme"]}}</p>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8 info-card">
+                <div class="row mb-3 pb-3">
+                    <div class="col-4 text-end">
+                        <img src="{{data['avatar']}}" class="avatar"/>
+                    </div>
+                    <div class="col-8 pt-3 text-start">
+                        <span class="fw-bold">{{data['fullname']}}</span><br/>
+                        <span >{{data['username']}}</span><br/>
+                        {% if data['bio'] %}
+                            <span>
+                                {{data['bio']}}<br/>
+                            </span>
+                        {% endif %}
+                        <p>
+                            {% if data['location'] %}
+                                <img class="location-marker" src="{{url_for('static', filename='images/location2.png')}}"/>
+                                <span class="user-location">{{data['location']}}</span>
+                            {% endif %}
+                        </p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item pe-3">
+                                <span class="li-header pe-1">Followers </span> {{data['followers']}}
+                            </li>
+                            <li class="list-inline-item pe-3">
+                                <span class="li-header pe-1">Following </span> {{data['following']}}
+                            </li>
+                            <li class="list-inline-item pe-3">
+                                <span class="li-header pe-1">Repositories </span> {{data['repositories']}}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-2"></div>
+
+                <hr>
+
+                {% if data["readme"] %}
+                    <div class="row" style="margin-top: 20px;">
+                        <p class="note note-info">{{data["readme"]}}</p>
+                        <hr>
+                    </div>
+                {% endif %}
+
+                <div class="row text-center" style="margin-top: 20px;">
+                    <img src="https://github-readme-streak-stats.herokuapp.com/?user={{data['username']}}&" alt="{{data['username']}}"/>
+                </div>
+
+                <div class="row text-center" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-primary" style="width:120px;">
+                        Export Profile
+                    </button>
+                </div>
             </div>
-        {% endif %}
+
+            <div class="col-2"></div>
+
+        </div>
     {% endif %}
 
 {% endblock %}

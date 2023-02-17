@@ -11,9 +11,9 @@ def index():
     if request.method == "POST":
         username = request.form.get('username')
         if username:
-            # user = User(username)
-            # data = user.get_full_info()
-            # print(data)
+            user = User(username)
+            data = user.get_full_info()
+            print(data)
             return render_template("index.html", index=True, data=data)
     return render_template("index.html", index=True, data=data)
 
