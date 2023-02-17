@@ -70,10 +70,12 @@
                     <img src="https://github-readme-streak-stats.herokuapp.com/?user={{data['username']}}&" alt="{{data['username']}}"/>
                 </div>
 
-                <div class="row text-center" style="margin-top: 20px;">
-                    <button type="button" class="btn btn-primary" style="width:120px;">
-                        Export Profile
-                    </button>
+                <div class="row text-center ms-2" style="margin-top: 20px;">
+                    <form action="/exportprofile" method="post">
+                        <button type="submit" class="btn btn-primary" style="width:120px;">
+                            Export Profile
+                        </button>
+                    </form>
                 </div>
             </div>
 
