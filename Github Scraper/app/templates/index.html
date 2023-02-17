@@ -6,12 +6,12 @@
         <p class="fs-5 col-12">A Fast and flexible website to scrape github for you</p>
     </div>
 
-    <form action="/" method="get">
+    <form action="/index" method="post">
         <div class="row" style="margin-top: 100px;">
             <div class="col-1"></div>
             <label for="username" class="col-2 col-form-label text-end">Github Username</label>
             <div class="col-6">
-                <input type="text" placeholder="@octocat" class="form-control" id="username">
+                <input type="text" placeholder="@octocat" class="form-control" id="username" name="username">
             </div>
             <div class="col-1">
                 <button type="submit" class="btn search-icon text-start">
@@ -21,4 +21,52 @@
         </div>
     </form>
 
+    <!-- User Info -->
+    {% if data %}
+        <div class="row" style="margin-top: 100px;">
+            <div class="col-4 text-end">
+                <img src="{{data['avatar']}}" class="avatar"/>
+            </div>
+            <div class="col-8 pt-4">
+                <span class="fw-bold">{{data['fullname']}}</span><br/>
+                <span >{{data['username']}}</span><br/>
+                <span>{{data['bio']}}</span><br/>
+                <p>
+                    {% if data['location'] %}
+                        <img class="location-marker" src="{{url_for('static', filename='images/location2.png')}}"/>
+                        <span class="user-location">{{data['location']}}</span>
+                    {% endif %}
+                </p>
+                <ul class="list-inline">
+                    <li class="list-inline-item pe-3">
+                        <span class="li-header pe-1">Followers </span> {{data['followers']}}
+                    </li>
+                    <li class="list-inline-item pe-3">
+                        <span class="li-header pe-1">Following </span> {{data['following']}}
+                    </li>
+                    <li class="list-inline-item pe-3">
+                        <span class="li-header pe-1">Repositories </span> {{data['repositories']}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        {% if data["readme"] %}
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <hr>
+                    <p class="note note-info">{{data["readme"]}}</p>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
 {% endblock %}

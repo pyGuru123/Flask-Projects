@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 class User:
     """A python wrapper to scrape any github profile"""
     def __init__(self, username:str=None):
+        self.url = f"https://github.com/{username}"
         try:
             response = requests.get(self.url)
             self.soup = BeautifulSoup(response.text, "html.parser")
@@ -24,6 +25,12 @@ class User:
         """Returns the fullname of the user"""
         fullname = self.soup.select_one("[class*='p-name vcard-fullname d-block']")
         return fullname.text.strip()
+
+    @property
+    def avatar(self) -> str:
+        """Returns the profile pic url"""
+        url = self.soup.select_one("[class*='avatar avatar-user']")
+        return url['src']
 
     @property
     def followers(self) -> str:
@@ -80,3 +87,21 @@ class User:
         if repos:
             return [repo.text for repo in repos]
         return None
+
+    def get_full_info(self) -> dict:
+        """Returns the complete scraped user info"""
+        data = {
+            "username" : self.username,
+            "fullname" : self.fullname,
+            "avatar" : self.avatar,
+            "followers" : self.followers,
+            "following" : self.following,
+            "bio" : self.bio,
+            "location" : self.location,
+            "repositories" : self.repositories,
+            "readme" : self.readme,
+            "contributions" : self.contributions,
+            "pinned" : self.get_pinned_repos()
+        }
+
+        return data
