@@ -1,7 +1,17 @@
-from app import app, db
+from app import app, db, api
 from app.models import User, Course, Enrollment
 from app.forms import LoginForm, RegisterForm
-from flask import render_template, request, json, Response, flash, redirect, url_for, session
+from flask import render_template, request, json, jsonify, Response, flash, redirect, url_for, session
+from flask_restx import Resource
+
+##################################################
+
+@api.route("/hello")
+class GetAndPost(Resource):
+    def get(self):
+        return jsonify(User.objects.all())
+
+##################################################
 
 @app.route("/")
 @app.route("/index")
@@ -136,3 +146,12 @@ def api(id=None):
 def user():
     users = User.objects.all()
     return render_template("user.html", users=users)
+
+########################################################
+
+
+
+# @api.route("/uapi/<idx>")
+# class GetUpdateDelete(Resource):
+#     def get(self, idx):
+#         return jsonify(User.objects(user_id=idx))
