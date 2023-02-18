@@ -87,7 +87,9 @@
 {% endblock %}
 
 {% block script %}
-    if ( window.history.replaceState ) {
+    <script>
+        if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
-    }
+        }
+    </script>
 {% endblock %}
