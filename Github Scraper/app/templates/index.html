@@ -70,6 +70,16 @@
                     <img src="https://github-readme-streak-stats.herokuapp.com/?user={{data['username']}}&" alt="{{data['username']}}"/>
                 </div>
 
+                <hr>
+
+                <div class="row text-center" style="margin-top: 20px;">
+                    <div class="card">
+                        <div class="card-body">
+                            <canvas id="chart-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row text-center ms-2" style="margin-top: 20px;">
                     <form action="/exportprofile" method="post">
                         <button type="submit" class="btn btn-primary" style="width:120px;">
@@ -88,6 +98,32 @@
 
 {% block script %}
     <script>
+        console.log("hello");
+        // const canvas = document.getElementById("chart-canvas");
+
+        // {% if data %}
+        const result = [{"Jupyter Notebook": 89.58, "Python": 8.88, "JavaScript": 0.7, "HTML": 0.49, "CSS": 0.21, "C": 0.14}, [["Python-Games", 109, 112], ["HackFest21", 50, 151], ["Python-on-WhatsApp", 43, 14], ["Python-Projects", 31, 34], ["GUI-Management-Systems", 6, 3]], [["HackFest21", 50, 151], ["Python-Games", 109, 112], ["Python-Projects", 31, 34], ["Python-on-WhatsApp", 43, 14], ["Decrypto", 5, 5]]];
+
+            // fetch("/allrepostats/{{data['username']}}")
+            // .then(response => response.json())
+            // .then(data => {
+            const top_languages = result[0];
+            const most_starred = result[1];
+            const most_forked = result[2];
+
+        console.log(result);
+
+            languages = [];
+            perc = [];
+            for (lang in top_languages) {
+                languages.push(lang);
+                perc.push(top_languages[lang]);
+                console.log(perc);
+            }
+
+            // })
+        // {% endif %}
+
         if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
         }
