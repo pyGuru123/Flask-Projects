@@ -1,3 +1,3 @@
 # Flask-Projects
 
-Working !
+A collection of few projects written in flask framework 
