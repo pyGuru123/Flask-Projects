@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 
+{% block includes %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+<!-- Main Body Block -->
 {% block content %}
     <div class="row text-center mt-4">
         <h3 class="col-12">Github Scraper</h3>
@@ -23,7 +28,6 @@
 
     {% if data %}
         <div class="row">
-            <div class="col-2"></div>
             <div class="col-8 info-card">
                 <div class="row mb-3 pb-3">
                     <div class="col-4 text-end">
@@ -72,13 +76,7 @@
 
                 <hr>
 
-                <div class="row text-center" style="margin-top: 20px;">
-                    <div class="card">
-                        <div class="card-body">
-                            <canvas id="chart-canvas"></canvas>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div class="row text-center ms-2" style="margin-top: 20px;">
                     <form action="/exportprofile" method="post">
@@ -89,40 +87,63 @@
                 </div>
             </div>
 
-            <div class="col-2"></div>
+            <div class="col-4">
+                <div class="row text-center chartdiv" style="margin-left: 1px;">
+                    <div class="card">
+                        <div class="card-body">
+                            <canvas id="chart" width="400" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     {% endif %}
 
 {% endblock %}
 
+<!-- Script Block -->
 {% block script %}
     <script>
-        console.log("hello");
-        // const canvas = document.getElementById("chart-canvas");
+        const all_colors = ["#FFC107","#FF5722","#E91E63","#9C27B0","#673AB7",,"#2196F3","#03A9F4",
+            "#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39","#FFEB3B","#FFCDD2","#EF9A9A",
+            "#E57373","#FF7043","#F48FB1","#CE93D8","#B39DDB","#9FA8DA",  "#81D4FA","#FF9800","#F44336",
+            "#3F51B5",
+            ];
 
-        // {% if data %}
         const result = [{"Jupyter Notebook": 89.58, "Python": 8.88, "JavaScript": 0.7, "HTML": 0.49, "CSS": 0.21, "C": 0.14}, [["Python-Games", 109, 112], ["HackFest21", 50, 151], ["Python-on-WhatsApp", 43, 14], ["Python-Projects", 31, 34], ["GUI-Management-Systems", 6, 3]], [["HackFest21", 50, 151], ["Python-Games", 109, 112], ["Python-Projects", 31, 34], ["Python-on-WhatsApp", 43, 14], ["Decrypto", 5, 5]]];
+        
+        {% if data %}
+            const chart = document.querySelector('canvas').getContext('2d');
 
-            // fetch("/allrepostats/{{data['username']}}")
-            // .then(response => response.json())
-            // .then(data => {
             const top_languages = result[0];
             const most_starred = result[1];
             const most_forked = result[2];
 
-        console.log(result);
+            document.addEventListener("DOMContentLoaded", function () {
+                var labels = Object.keys(top_languages)
+                var data = Object.values(top_languages);
+                var colors = all_colors.slice(top_languages.length);
 
-            languages = [];
-            perc = [];
-            for (lang in top_languages) {
-                languages.push(lang);
-                perc.push(top_languages[lang]);
-                console.log(perc);
-            }
+                const ch = new Chart(chart, {
+                    type: 'pie',
+                    data: {
+                    labels : labels,
+                    datasets : [{
+                        label: 'Top Languages',
+                        data: data,
+                        backgroundColor : colors,
+                        hoverOffset: 4
+                        }]
+                    }
+                });
+            });
+        {% endif %}
 
-            // })
-        // {% endif %}
+            // fetch("/allrepostats/{{data['username']}}")
+            // .then(response => response.json())
+            // .then(data => {});
+        
 
         if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
