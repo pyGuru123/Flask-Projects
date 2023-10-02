@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+<!-- Main Body Block -->
+{% block content %}
+    <div class="row text-center mt-4">
+        <h3 class="col-12">Github Scraper</h3>
+        <p class="fs-5 col-12">A Fast and flexible website to scrape github for you</p>
+    </div>
+
+    <form action="/repository" method="post">
+        <div class="row form-div" style="margin-top: 100px;">
+            <div class="col-1"></div>
+            <label for="repo" class="col-2 col-form-label text-end">Github Repo URL</label>
+            <div class="col-6">
+                <input type="text" placeholder="https://github.com/pyGuru123/GitScraper" class="form-control" id="username" name="repo">
+            </div>
+            <div class="col-1">
+                <button type="submit" class="btn search-icon text-start">
+                    <img src="{{url_for('static', filename='images/search.png')}}">
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% if data %}
+        <div class="row">
+            <!-- Left Pane -->
+            <div class="col-8 col-xs-12 info-card">
+                <p>{{data['reponame']}}</p>
+            </div>
+            <div class="col-4 col-xs-12 stats-card">
+                <div class="row text-center chartdiv" style="margin-left: 1px; margin-top: 10px;">
+                    <div class="card-body">
+                        <h5 class="right-title">Top Languages<h4>
+                        <canvas id="chart" width="400" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+    {% else %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-danger text-center">
+                    <p style="margin:0; padding:0;">{{message}}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+{% endblock %}
+
+{% block script%}
+    <script>
+        const all_colors = ["#FFC107","#FF5722","#E91E63","#9C27B0","#673AB7",,"#2196F3","#03A9F4",
+            "#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39","#FFEB3B","#FFCDD2","#EF9A9A",
+            "#E57373","#FF7043","#F48FB1","#CE93D8","#B39DDB","#9FA8DA",  "#81D4FA","#FF9800","#F44336",
+            "#3F51B5",
+            ];
+
+        {% if data %}
+            const chart = document.querySelector('canvas').getContext('2d');
+        {% endif %}
+
+
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+{% endblock %}
